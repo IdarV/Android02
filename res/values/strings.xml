@@ -2,13 +2,64 @@
 <resources>
     <string name="app_name">Android02</string>
     <string-array name="things">
-        <item>android</item>
-        <item>ubuntu</item>
-        <item>apple</item>
-        <item>iphone</item>
-        <item>mac</item>
-        <item>google</item>
-        <item>chrome</item>
-        <item>firefox</item>
+        <!-- OS -->
+        <item>Ubuntu</item>
+        <item>Linux</item>
+        <item>Apple</item>
+        <item>Windows</item>
+        <item>Mac</item>
+
+        <!-- BIG CORP. -->
+        <item>Netflix</item>
+        <item>Google</item>
+        <item>Amazon</item>
+        <item>Ebay</item>
+
+
+        <!-- Browsers -->
+        <item>Chrome</item>
+        <item>Safari</item>
+        <item>Firefox</item>
+        <item>Internet Explorer</item>
+
+        <!-- Phones -->
+        <item>HTC</item>
+        <item>Motorola</item>
+        <item>iPhone</item>
+        <item>Android</item>
+
+        <!-- Editors -->
+        <item>Eclipse</item>
+        <item>Intellij</item>
+        <item>Sublime Text</item>
+        <item>Visual Studio</item>
+        <item>Photoshop</item>
+
+        <!-- Programming languages -->
+        <item>Ruby</item>
+        <item>Python</item>
+        <item>Java</item>
+        <item>C#</item>
+        <item>C</item>
+        <item>C++</item>
+        <item>HTML</item>
+        <item>CSS</item>
+        <item>Visual Basic</item>
+        <item>Javascript</item>
+        <item>PHP</item>
+
+
+        <!-- Databases -->
+        <item>SQL</item>
+        <item>Mongo DB</item>
+        <item>Postgres</item>
+        <item>SQLite</item>
+
+        <!-- Websites -->
+        <item>Hacker News</item>
+        <item>The Verge</item>
+        <item>xkcd</item>
+        <item>Stack Overflow</item>
+
     </string-array>
 </resources>

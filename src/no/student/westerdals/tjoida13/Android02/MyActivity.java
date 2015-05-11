@@ -25,5 +25,6 @@ public class MyActivity extends Activity {
         TextView txtView1 = (TextView) findViewById(R.id.textView4);
         Log.d("oncreate", "setting 4 to " + myList[6] + "88");
         txtView1.setText(myList[6] + "88");
+
     }
 }
