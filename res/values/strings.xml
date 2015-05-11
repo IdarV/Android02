@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Android02</string>
+    <string-array name="things">
+        <item>android</item>
+        <item>ubuntu</item>
+        <item>apple</item>
+        <item>iphone</item>
+        <item>mac</item>
+        <item>google</item>
+        <item>chrome</item>
+        <item>firefox</item>
+    </string-array>
 </resources>

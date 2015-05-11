@@ -4,10 +4,63 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
+
     <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World, MyActivity"
-            />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Round"
+            android:id="@+id/textView9" android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Apple"
+            android:id="@+id/textView"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Android"
+            android:id="@+id/textView2"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Linux"
+            android:id="@+id/textView3"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Windows"
+            android:id="@+id/textView4"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Mac"
+            android:id="@+id/textView5"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Iphone"
+            android:id="@+id/textView6"/>
+    <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Ubuntu"
+            android:id="@+id/textView7"/>
+    <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Sony"
+            android:id="@+id/textView8"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/button" android:layout_gravity="center_horizontal"/>
 </LinearLayout>
 
