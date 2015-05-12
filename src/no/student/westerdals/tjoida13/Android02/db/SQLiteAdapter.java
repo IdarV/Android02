@@ -58,8 +58,6 @@ public class SQLiteAdapter {
         editor.commit();
 
         return id++;
-
-
     }
 
     public Cursor readAll() {

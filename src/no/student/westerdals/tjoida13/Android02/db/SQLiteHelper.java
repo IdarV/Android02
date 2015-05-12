@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapter.TABLE_NAME;
 
@@ -29,6 +30,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SCRIPT_CREATE_DATABASE);
+        Log.wtf("SQLiteHelper:OnCreate", "OnCreate()");
+
     }
 
     @Override
