@@ -11,6 +11,7 @@ import no.student.westerdals.tjoida13.Android02.db.SQLiteHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class MyActivity extends Activity {
 
@@ -31,6 +32,7 @@ public class MyActivity extends Activity {
         initSqlLiteAdapter();
         readDatabaseAll();
         populateSqlLiteAdapter();
+        getRandomCollection(5);
     }
 
     @Override
@@ -68,5 +70,26 @@ public class MyActivity extends Activity {
         }
         sqLiteAdapter.deleteAll();
         sqLiteAdapter.close();
+    }
+
+    public ArrayList<String> getRandomCollection(int limit){
+        ArrayList<String> randomCollection = new ArrayList<String>();
+        Random random = new Random();
+        if(limit > myDbArrayList.size()-1){
+            return new ArrayList<String>(myDbArrayList);
+        }
+
+        while(randomCollection.size() < limit){
+            String word = myDbArrayList.get(random.nextInt(myDbArrayList.size()-1));
+            if(!randomCollection.contains(word)){
+                randomCollection.add(word);
+            }
+        }
+
+        for(String s : randomCollection){
+            Log.wtf("RANDOMCOLLECTION", s);
+        }
+
+        return randomCollection;
     }
 }
