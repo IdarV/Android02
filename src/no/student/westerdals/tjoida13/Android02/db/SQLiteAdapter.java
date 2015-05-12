@@ -60,6 +60,10 @@ public class SQLiteAdapter {
         return id++;
     }
 
+    public boolean checkIfTableExists(){
+        return sqLiteDatabase.rawQuery("SELECT count(*) FROM " + TABLE_NAME, null).moveToNext();
+    }
+
     public Cursor readAll() {
         String[] columns = new String[]{WORD_ID, WORD};
         return sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null);

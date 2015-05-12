@@ -32,12 +32,11 @@ public class MyActivity extends Activity {
         context = this;
         sqLiteAdapter = new SQLiteAdapter(context);
         initSqlLiteAdapter();
-        readDatabaseAll();
+       /* readDatabaseAll();
         populateSqlLiteAdapter();
-        Log.wtf("OnCreate running random call", "Random call, dbsize:" + myDbArrayList.size());
-        randomArray = getRandomCollection(9);
-        setNames();
-        setButtonRedirectToSameAction();
+        setAndUpdateRandomStrings();*/
+        initDataAsync();
+        setButtonUpdate();
     }
 
     @Override
@@ -52,12 +51,26 @@ public class MyActivity extends Activity {
         myDbArrayList = new ArrayList<String>();
     }
 
+    public void initDataAsync(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                readDatabaseAll();
+                populateSqlLiteAdapter();
+                setAndUpdateRandomStrings();
+            }
+        }).run();
+    }
+
     public void populateSqlLiteAdapter() {
         //TODO: Instead of checkin all, just check if it exists (?)
         sqLiteAdapter.open();
-        for (String word : myLocalArrayList) {
-            if (!myDbArrayList.contains(word)) {
+        if(!sqLiteAdapter.checkIfTableExists()) {
+            Log.wtf("TABLE NOT EXIST", "YAEHGJAL");
+            for (String word : myLocalArrayList) {
+                // if (!myDbArrayList.contains(word)) {
                 sqLiteAdapter.create(word);
+                //   }
             }
         }
         sqLiteAdapter.close();
@@ -91,7 +104,6 @@ public class MyActivity extends Activity {
                 randomCollection.add(word);
             }
         }
-        Log.wtf("RANDOMCOLLECTION", "starting iterating randomcolletion: ");
         for (String s : randomCollection) {
             Log.wtf("RANDOMCOLLECTION", s);
         }
@@ -111,27 +123,31 @@ public class MyActivity extends Activity {
         textViews.add((TextView) findViewById(R.id.textView8));
         textViews.add((TextView) findViewById(R.id.textView9));
 
-        Log.wtf("Errorplace", "Textviews size: " + textViews.size() + " randomrize:" + randomArray.size());
         for (int i = 0; i <= textViews.size() -1; i++) {
             TextView textView = textViews.get(i);
             textView.setText(randomArray.get(i));
         }
     }
 
-    public void setButtonRedirectToSameAction(){
+    public void setButtonUpdate(){
         Button button = (Button) findViewById(R.id.OKbutton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log.wtf("REDIRECT", "redirecting to same page");
-                //startActivity(new Intent(context, MyActivity.class));
-                randomArray = getRandomCollection(9);
-                setNames();
-                getWindow().getDecorView().findViewById(android.R.id.content).invalidate();
-
-
+               new Thread(new Runnable() {
+                   @Override
+                   public void run() {
+                       setAndUpdateRandomStrings();
+                   }
+               }).run();
             }
         });
+    }
+
+    public void setAndUpdateRandomStrings(){
+        randomArray = getRandomCollection(9);
+        setNames();
+
     }
 
 }
