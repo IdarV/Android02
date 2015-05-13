@@ -2,6 +2,7 @@ package no.student.westerdals.tjoida13.Android02;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -129,7 +130,12 @@ public class MyActivity extends Activity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        setAndUpdateRandomStrings();
+                        //setAndUpdateRandomStrings();
+                        Intent guessIntent = new Intent(context, GuessActivity.class);
+                        guessIntent.putExtra("CorrectWord", pullCorrectWordFromList());
+                        guessIntent.putExtra("WrongWords", wrongWords);
+                        guessIntent.putExtra("RemainingWords", randomArray);
+                        startActivity(guessIntent);
                     }
                 }).run();
             }
@@ -137,9 +143,17 @@ public class MyActivity extends Activity {
     }
 
     public void setAndUpdateRandomStrings() {
-        randomArray = getRandomCollection(9);
+        randomArray = getRandomCollection(8);
         setNames();
 
+    }
+
+    public String pullCorrectWordFromList(){
+        Random random = new Random();
+        int randomIndex = random.nextInt(randomArray.size()-1);
+        String correctWord = randomArray.get(randomIndex);
+        randomArray.remove(randomIndex);
+        return correctWord;
     }
 
 }
