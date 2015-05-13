@@ -14,13 +14,15 @@ import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapter;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Created by Idar Vassdal on 12.05.2015.
+ */
 public class MyActivity extends Activity {
     private Context context;
     public static SQLiteAdapter sqLiteAdapter;
     private ArrayList<String> myDbArrayList;
     private ArrayList<String> randomArray;
     private String[] wrongWords;
-    private String correctWord;
 
     /**
      * Called when the activity is first created.
@@ -130,11 +132,10 @@ public class MyActivity extends Activity {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        //setAndUpdateRandomStrings();
                         Intent guessIntent = new Intent(context, GuessActivity.class);
                         guessIntent.putExtra("CorrectWord", pullCorrectWordFromList());
-                        guessIntent.putExtra("WrongWords", wrongWords);
                         guessIntent.putExtra("RemainingWords", randomArray);
+                        guessIntent.putExtra("WrongWords", wrongWords);
                         startActivity(guessIntent);
                     }
                 }).run();
@@ -148,7 +149,7 @@ public class MyActivity extends Activity {
 
     }
 
-    public String pullCorrectWordFromList(){
+    public String pullCorrectWordFromList() {
         Random random = new Random();
         int randomIndex = random.nextInt(randomArray.size()-1);
         String correctWord = randomArray.get(randomIndex);
