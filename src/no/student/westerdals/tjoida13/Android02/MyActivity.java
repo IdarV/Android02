@@ -12,6 +12,7 @@ import android.widget.TextView;
 import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -134,6 +135,7 @@ public class MyActivity extends Activity {
                     public void run() {
                         Intent guessIntent = new Intent(context, GuessActivity.class);
                         guessIntent.putExtra("CorrectWord", pullCorrectWordFromList());
+                        Collections.shuffle(randomArray);
                         guessIntent.putExtra("RemainingWords", randomArray);
                         guessIntent.putExtra("WrongWords", wrongWords);
                         startActivity(guessIntent);

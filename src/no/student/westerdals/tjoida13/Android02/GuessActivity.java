@@ -1,14 +1,19 @@
 package no.student.westerdals.tjoida13.Android02;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * Created by Idar Vassdal on 13.05.2015.
@@ -16,7 +21,8 @@ import java.util.Collections;
 public class GuessActivity extends Activity{
     private ArrayList<String> randomArray;
     private String correctWord;
-    private String[] wrongWords;
+    private Context context;
+    private ArrayList<String> wrongWords;
 
     /**
      * Called when the activity is first created.
@@ -25,6 +31,7 @@ public class GuessActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guess);
+        context = this;
         getExtras();
         setNames();
     }
@@ -34,7 +41,7 @@ public class GuessActivity extends Activity{
         randomArray = intent.getStringArrayListExtra("RemainingWords");
         Collections.shuffle(randomArray);
         correctWord = intent.getStringExtra("CorrectWord");
-        wrongWords = intent.getStringArrayExtra("WrongWords");
+        wrongWords = new ArrayList<String>(Arrays.asList(intent.getStringArrayExtra("WrongWords")));
     }
 
     public void setNames() {
@@ -60,11 +67,40 @@ public class GuessActivity extends Activity{
     }
 
     public void initAnswerButtons(){
+        Button[] answerButtons = new Button[3];
         Button guessOne = (Button) findViewById(R.id.guessOne);
-        guessOne.setText(correctWord);
         Button guessTwo = (Button) findViewById(R.id.guessTwo);
-        guessTwo.setText(wrongWords[0]);
         Button guessThree = (Button) findViewById(R.id.guessThree);
-        guessThree.setText(wrongWords[1]);
+
+        answerButtons[0] = guessOne;
+        answerButtons[1] = guessTwo;
+        answerButtons[2] = guessThree;
+
+        ArrayList<String> allAnswers = new ArrayList<String>();
+        allAnswers.add(correctWord);
+        allAnswers.addAll(wrongWords);
+        Collections.shuffle(allAnswers);
+
+        int i = 0;
+        for(String currentWord : allAnswers){
+            if(currentWord.equals(correctWord)){
+                answerButtons[i].setText(allAnswers.get(i));
+                answerButtons[i].setOnClickListener(getToastOnClickListener("Correct"));
+            }
+            else{
+                answerButtons[i].setText(currentWord);
+                answerButtons[i].setOnClickListener(getToastOnClickListener("Wrong"));
+            }
+            i++;
+        }
+    }
+
+    public View.OnClickListener getToastOnClickListener(final String toastText){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }
