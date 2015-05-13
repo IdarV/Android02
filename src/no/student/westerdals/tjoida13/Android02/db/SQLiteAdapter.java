@@ -60,8 +60,10 @@ public class SQLiteAdapter {
         return id++;
     }
 
-    public boolean checkIfTableExists(){
-        return sqLiteDatabase.rawQuery("SELECT count(*) FROM " + TABLE_NAME, null).moveToNext();
+    public boolean hasRows(){
+        int rowcount = sqLiteDatabase.rawQuery("SELECT count(*) FROM " + TABLE_NAME, null).getCount();
+        Log.wtf("SQLiteAdapter", "rowcount: " + rowcount);
+        return  rowcount > 1;
     }
 
     public Cursor readAll() {

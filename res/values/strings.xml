@@ -3,6 +3,7 @@
     <string name="app_name">Android02</string>
     <string name="default_text">Default</string>
     <string name="OK">OK</string>
+    <string name="word">word</string>
     <string-array name="things">
         <!-- OS -->
         <item>Ubuntu</item>

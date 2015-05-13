@@ -11,15 +11,12 @@ import android.widget.TextView;
 import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class MyActivity extends Activity {
-
     private Context context;
     public static SQLiteAdapter sqLiteAdapter;
     private ArrayList<String> myDbArrayList;
-    private ArrayList<String> myLocalArrayList;
     private ArrayList<String> randomArray;
 
     /**
@@ -30,70 +27,57 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         context = this;
-        sqLiteAdapter = new SQLiteAdapter(context);
-        initSqlLiteAdapter();
-       /* readDatabaseAll();
-        populateSqlLiteAdapter();
-        setAndUpdateRandomStrings();*/
-        initDataAsync();
-        setButtonUpdate();
-    }
 
-    @Override
-    public void onDestroy() {
-        sqLiteAdapter.open();
-        sqLiteAdapter.deleteAll();
+        initSqlLiteAdapter();
+        initDataAsync();
+        setOkButtonOnClick();
     }
 
     public void initSqlLiteAdapter() {
-        String[] technologiesArray = getResources().getStringArray(R.array.things);
-        myLocalArrayList = new ArrayList<String>(Arrays.asList(technologiesArray));
-        myDbArrayList = new ArrayList<String>();
+        sqLiteAdapter = new SQLiteAdapter(context);
     }
 
-    public void initDataAsync(){
+    public void initDataAsync() {
+        myDbArrayList = new ArrayList<String>();
         new Thread(new Runnable() {
             @Override
             public void run() {
-                readDatabaseAll();
                 populateSqlLiteAdapter();
+                readAllFromDatabase();
                 setAndUpdateRandomStrings();
             }
         }).run();
     }
 
     public void populateSqlLiteAdapter() {
-        //TODO: Instead of checkin all, just check if it exists (?)
         sqLiteAdapter.open();
-        if(!sqLiteAdapter.checkIfTableExists()) {
-            Log.wtf("TABLE NOT EXIST", "YAEHGJAL");
-            for (String word : myLocalArrayList) {
-                // if (!myDbArrayList.contains(word)) {
+
+        if (!sqLiteAdapter.hasRows()) {
+            Log.wtf("MyActivity:populateSqlLiteAdapter()", "sqlLiteAdapter doesn't have rows. Filling.");
+            String[] technologiesArray = getResources().getStringArray(R.array.things);
+
+            for (String word : technologiesArray) {
                 sqLiteAdapter.create(word);
-                //   }
             }
         }
         sqLiteAdapter.close();
     }
 
-    public void readDatabaseAll() {
+    public void readAllFromDatabase() {
         sqLiteAdapter.open();
-
         Cursor cursor = sqLiteAdapter.readAll();
-        if (cursor.getColumnCount() > 0) {
-            while (cursor.moveToNext()) {
-                String word = cursor.getString(cursor.getColumnIndex("word"));
-                Log.wtf("MAIN FOUND IN DATABASE", word);
-                myDbArrayList.add(word);
-            }
+
+        while (cursor.moveToNext()) {
+            String word = cursor.getString(cursor.getColumnIndex(getString(R.string.word)));
+            myDbArrayList.add(word);
         }
-        //sqLiteAdapter.deleteAll();
         sqLiteAdapter.close();
     }
 
     public ArrayList<String> getRandomCollection(int limit) {
         ArrayList<String> randomCollection = new ArrayList<String>();
         Random random = new Random();
+
         if (limit > myDbArrayList.size() - 1) {
             return new ArrayList<String>(myDbArrayList);
         }
@@ -104,14 +88,12 @@ public class MyActivity extends Activity {
                 randomCollection.add(word);
             }
         }
-        for (String s : randomCollection) {
-            Log.wtf("RANDOMCOLLECTION", s);
-        }
 
         return randomCollection;
     }
 
     public void setNames() {
+        Log.v("MyActivity:setNames()", "Updating textView names");
         ArrayList<TextView> textViews = new ArrayList<TextView>();
         // TODO: Fix loop
         textViews.add((TextView) findViewById(R.id.textView2));
@@ -123,28 +105,27 @@ public class MyActivity extends Activity {
         textViews.add((TextView) findViewById(R.id.textView8));
         textViews.add((TextView) findViewById(R.id.textView9));
 
-        for (int i = 0; i <= textViews.size() -1; i++) {
-            TextView textView = textViews.get(i);
-            textView.setText(randomArray.get(i));
+        for (int i = 0; i <= textViews.size() - 1; i++) {
+            textViews.get(i).setText(randomArray.get(i));
         }
     }
 
-    public void setButtonUpdate(){
+    public void setOkButtonOnClick() {
         Button button = (Button) findViewById(R.id.OKbutton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               new Thread(new Runnable() {
-                   @Override
-                   public void run() {
-                       setAndUpdateRandomStrings();
-                   }
-               }).run();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setAndUpdateRandomStrings();
+                    }
+                }).run();
             }
         });
     }
 
-    public void setAndUpdateRandomStrings(){
+    public void setAndUpdateRandomStrings() {
         randomArray = getRandomCollection(9);
         setNames();
 
