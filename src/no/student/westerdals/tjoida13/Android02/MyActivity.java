@@ -18,6 +18,8 @@ public class MyActivity extends Activity {
     public static SQLiteAdapter sqLiteAdapter;
     private ArrayList<String> myDbArrayList;
     private ArrayList<String> randomArray;
+    private String[] wrongWords;
+    private String correctWord;
 
     /**
      * Called when the activity is first created.
@@ -88,6 +90,15 @@ public class MyActivity extends Activity {
                 randomCollection.add(word);
             }
         }
+        wrongWords = new String[2];
+        for(int i = 0; i < 2; ){
+            String word = myDbArrayList.get(random.nextInt(myDbArrayList.size() - 1));
+            if (!randomCollection.contains(word)) {
+                wrongWords[i] = word;
+                i++;
+            }
+        }
+        Log.wtf("MyActivity():getRandomCollection", "Wrong words are " + wrongWords[0] + " and " + wrongWords[1]);
 
         return randomCollection;
     }
