@@ -68,7 +68,7 @@ public class SQLiteAdapter {
     public Cursor readAll() {
         //String[] columns = new String[]{WORD_ID, WORD};
         // TODO; SELECT word (?)
-        return sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return sqLiteDatabase.rawQuery("SELECT " + WORD + " FROM " + TABLE_NAME, null);
         //return sqLiteDatabase.query(TABLE_NAME, columns, null, null, null, null, null);
         //(Table_name, columns, where, where args, group by, order by, having)
     }
