@@ -61,13 +61,13 @@ public class SQLiteAdapter {
     }
 
     public boolean hasRows(){
-        int rowcount = sqLiteDatabase.rawQuery("SELECT count(*) FROM " + TABLE_NAME, null).getCount();
-        Log.wtf("SQLiteAdapter", "rowcount: " + rowcount);
+        int rowcount = sqLiteDatabase.rawQuery("SELECT word FROM " + TABLE_NAME, null).getCount();
         return  rowcount > 1;
     }
 
     public Cursor readAll() {
-        String[] columns = new String[]{WORD_ID, WORD};
+        //String[] columns = new String[]{WORD_ID, WORD};
+        // TODO; SELECT word (?)
         return sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         //return sqLiteDatabase.query(TABLE_NAME, columns, null, null, null, null, null);
         //(Table_name, columns, where, where args, group by, order by, having)
