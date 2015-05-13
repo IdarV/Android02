@@ -68,5 +68,15 @@
             android:text="@string/OK"
             android:id="@+id/guessThree"
             android:layout_gravity="center_horizontal"/>
+    <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Back"
+                android:id="@+id/BackButton"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

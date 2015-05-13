@@ -34,6 +34,7 @@ public class GuessActivity extends Activity{
         context = this;
         getExtras();
         setNames();
+        initBackButton();
     }
 
     public void getExtras(){
@@ -102,5 +103,15 @@ public class GuessActivity extends Activity{
                 Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
             }
         };
+    }
+
+    public void initBackButton(){
+        Button backButton = (Button) findViewById(R.id.BackButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, MyActivity.class));
+            }
+        });
     }
 }
