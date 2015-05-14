@@ -110,7 +110,9 @@ public class GuessActivity extends Activity{
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, MyActivity.class));
+                Intent guessIntent = new Intent(context, MyActivity.class);
+                guessIntent.putExtra("Score", getIntent().getIntExtra("Score", 0));
+                startActivity(guessIntent);
             }
         });
     }

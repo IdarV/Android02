@@ -26,6 +26,7 @@ public class MyActivity extends Activity {
     private ArrayList<String> myDbArrayList;
     private ArrayList<String> randomArray;
     private String[] wrongWords;
+    private int Score;
 
     /**
      * Called when the activity is first created.
@@ -37,15 +38,18 @@ public class MyActivity extends Activity {
         context = this;
 
         initSqlLiteAdapter();
+        initScore();
         initDataAsync();
         setOkButtonOnClick();
+        TextView header = (TextView) findViewById(R.id.textViewHeader);
+        header.setText(String.valueOf(Score));
     }
 
     public void initSqlLiteAdapter() {
 
         sqLiteAdapterTechnologies = new SQLiteAdapterTechnologies(context);
         sqLiteAdapterHighscore = new SQLiteAdapterHighscore(context);
-
+/*
         //TODO: DELETE THIS DEMO
         sqLiteAdapterHighscore.open();
         sqLiteAdapterHighscore.create(12, "IDAR");
@@ -58,7 +62,8 @@ public class MyActivity extends Activity {
             TextView header = (TextView) findViewById(R.id.textViewHeader);
             header.setText(name + ": " + score);
         }
-        sqLiteAdapterHighscore.close();
+        sqLiteAdapterHighscore.close();*/
+
     }
 
     public void initDataAsync() {
@@ -156,6 +161,7 @@ public class MyActivity extends Activity {
                         Collections.shuffle(randomArray);
                         guessIntent.putExtra("RemainingWords", randomArray);
                         guessIntent.putExtra("WrongWords", wrongWords);
+                        guessIntent.putExtra("Score", (Score+1));
                         startActivity(guessIntent);
                     }
                 }).run();
@@ -174,6 +180,11 @@ public class MyActivity extends Activity {
         String correctWord = randomArray.get(randomIndex);
         randomArray.remove(randomIndex);
         return correctWord;
+    }
+
+    public void initScore(){
+        Score = getIntent().getIntExtra("Score", 0);
+        Log.wtf("initScore", "Score is " + Score);
     }
 
 }
