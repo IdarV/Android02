@@ -2,28 +2,27 @@ package no.student.westerdals.tjoida13.Android02.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterTechnologies.TABLE_NAME_TECHNOLOGIES;
-import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterTechnologies.WORD;
-
+import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore.TABLE_NAME_HIGHSCORE;
+import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore.SCORE;
+import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore.USER;
 
 /**
- * User: tmg
- * Happy coding!
+ * Created by Cyzla on 14.05.2015.
  */
-public class SQLiteHelperTechnologies extends SQLiteOpenHelper {
-
+public class SQLiteHelperHighscore extends SQLiteOpenHelper {
     private static final String SCRIPT_CREATE_DATABASE = /*"CREATE TABLE "
             + TABLE_NAME_TECHNOLOGIES + " (" + WORD_ID + " NUMBER PRIMARY KEY,"
             + WORD + " TEXT NOT NULL)";*/
             "CREATE TABLE "
-                    + TABLE_NAME_TECHNOLOGIES +
-                     "(" + WORD + " TEXT NOT NULL)";
+                    + TABLE_NAME_HIGHSCORE+
+                    "(" + USER + " TEXT NOT NULL,"
+                    + SCORE + " BIGINT NOT NULL)";
 
-    public SQLiteHelperTechnologies(Context context, String name, CursorFactory factory, int version) {
+
+    public SQLiteHelperHighscore(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context,name,factory,version);
     }
 

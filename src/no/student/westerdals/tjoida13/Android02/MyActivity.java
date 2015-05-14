@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore;
 import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterTechnologies;
+import no.student.westerdals.tjoida13.Android02.db.SQLiteHelperHighscore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +23,7 @@ import java.util.Random;
 public class MyActivity extends Activity {
     private Context context;
     public static SQLiteAdapterTechnologies sqLiteAdapterTechnologies;
+    public static SQLiteAdapterHighscore sqLiteAdapterHighscore;
     private ArrayList<String> myDbArrayList;
     private ArrayList<String> randomArray;
     private String[] wrongWords;
@@ -40,7 +43,23 @@ public class MyActivity extends Activity {
     }
 
     public void initSqlLiteAdapter() {
+
         sqLiteAdapterTechnologies = new SQLiteAdapterTechnologies(context);
+        sqLiteAdapterHighscore = new SQLiteAdapterHighscore(context);
+
+        //TODO: DELETE THIS DEMO
+        sqLiteAdapterHighscore.open();
+        sqLiteAdapterHighscore.create(12, "IDAR");
+
+        Cursor c = sqLiteAdapterHighscore.readAll();
+        String name, score;
+        while (c.moveToNext()){
+            name = c.getString(c.getColumnIndex("user"));
+            score = c.getString(c.getColumnIndex("score"));
+            TextView header = (TextView) findViewById(R.id.textViewHeader);
+            header.setText(name + ": " + score);
+        }
+        sqLiteAdapterHighscore.close();
     }
 
     public void initDataAsync() {

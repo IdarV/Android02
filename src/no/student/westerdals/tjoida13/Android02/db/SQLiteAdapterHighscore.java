@@ -9,62 +9,55 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 /**
- * User: tmg
- * Happy coding!
+ * Created by Cyzla on 14.05.2015.
  */
-public class SQLiteAdapterTechnologies {
-
-    public static final String DATABASE_NAME = "TechNames";
+public class SQLiteAdapterHighscore {
+    public static final String DATABASE_NAME = "Highscores";
     public static final int DATABASE_VERSION = 1;
-    public static final String TABLE_NAME_TECHNOLOGIES="Technologies";
-    public static final String WORD = "word";
-    public static final String PREF_DB = "PreferencesDb";
+    public static final String TABLE_NAME_HIGHSCORE ="highscore";
 
-    private SQLiteHelperTechnologies sqLiteHelperTechnologies;
+    public static final String SCORE = "score";
+    public static final String USER = "user";
+
+
+    public static final String PREFERENCES_DB = "PreferencesDb";
+
+    private SQLiteHelperHighscore sqLiteHelperHighscore;
     private SQLiteDatabase sqLiteDatabase;
     private Context context;
 
     private SharedPreferences preferences;
 
-   // private long id = 1;
-
-    public SQLiteAdapterTechnologies(Context context) {
+    public SQLiteAdapterHighscore(Context context) {
         this.context = context;
 
-        preferences = context.getSharedPreferences(PREF_DB, Activity.MODE_APPEND);
-       /* if(preferences != null){
-            id = preferences.getLong("nextId", 1);
-        }*/
-
+        preferences = context.getSharedPreferences(PREFERENCES_DB, Activity.MODE_APPEND);
     }
 
-    public SQLiteAdapterTechnologies open () {
-        sqLiteHelperTechnologies = new SQLiteHelperTechnologies(context,DATABASE_NAME,null,DATABASE_VERSION);
-        sqLiteDatabase = sqLiteHelperTechnologies.getWritableDatabase(); //Should be in a background thread, i.e. Async
+    public SQLiteAdapterHighscore open () {
+        sqLiteHelperHighscore = new SQLiteHelperHighscore(context,DATABASE_NAME,null,DATABASE_VERSION);
+        sqLiteDatabase = sqLiteHelperHighscore.getWritableDatabase(); //Should be in a background thread, i.e. Async
         return this;
     }
 
-    public void create(String word) {
+    public void create(int user, String score) {
         ContentValues values = new ContentValues();
-       // values.put(WORD_ID, id);
-        values.put(WORD, word);
+        values.put(SCORE, score);
+        values.put(USER, user);
 
-        sqLiteDatabase.insert(TABLE_NAME_TECHNOLOGIES,null,values);
+        sqLiteDatabase.insert(TABLE_NAME_HIGHSCORE, null, values);
         SharedPreferences.Editor editor = preferences.edit();
-        //editor.putLong("nextId",id+1);
         editor.commit();
-
-        //return id++;
     }
 
     public boolean hasRows(){
-        int rowcount = sqLiteDatabase.rawQuery("SELECT word FROM " + TABLE_NAME_TECHNOLOGIES, null).getCount();
+        int rowcount = sqLiteDatabase.rawQuery("SELECT word FROM " + TABLE_NAME_HIGHSCORE, null).getCount();
         return  rowcount > 1;
     }
 
     public Cursor readAll() {
         //String[] columns = new String[]{SCORE_ID, SCORE};
-        return sqLiteDatabase.rawQuery("SELECT " + WORD + " FROM " + TABLE_NAME_TECHNOLOGIES, null);
+        return sqLiteDatabase.rawQuery("SELECT " + SCORE + ", " + USER + " FROM " + TABLE_NAME_HIGHSCORE, null);
         //return sqLiteDatabase.query(TABLE_NAME, columns, null, null, null, null, null);
         //(Table_name, columns, where, where args, group by, order by, having)
     }
@@ -91,7 +84,7 @@ public class SQLiteAdapterTechnologies {
     }*/
 
     public void deleteAll(){
-       sqLiteDatabase.delete(TABLE_NAME_TECHNOLOGIES, null, null);
+        sqLiteDatabase.delete(TABLE_NAME_HIGHSCORE, null, null);
         Log.wtf("SQLiteAdapterTechnologies", "ZOMFG DELETED ALL");
 
     }
@@ -100,7 +93,6 @@ public class SQLiteAdapterTechnologies {
     public void close() {
         sqLiteDatabase.close();
     }
-
 
 
 }
