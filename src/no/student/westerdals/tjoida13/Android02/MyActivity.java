@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapter;
+import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterTechnologies;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import java.util.Random;
  */
 public class MyActivity extends Activity {
     private Context context;
-    public static SQLiteAdapter sqLiteAdapter;
+    public static SQLiteAdapterTechnologies sqLiteAdapterTechnologies;
     private ArrayList<String> myDbArrayList;
     private ArrayList<String> randomArray;
     private String[] wrongWords;
@@ -40,7 +40,7 @@ public class MyActivity extends Activity {
     }
 
     public void initSqlLiteAdapter() {
-        sqLiteAdapter = new SQLiteAdapter(context);
+        sqLiteAdapterTechnologies = new SQLiteAdapterTechnologies(context);
     }
 
     public void initDataAsync() {
@@ -56,28 +56,28 @@ public class MyActivity extends Activity {
     }
 
     public void populateSqlLiteAdapter() {
-        sqLiteAdapter.open();
+        sqLiteAdapterTechnologies.open();
 
-        if (!sqLiteAdapter.hasRows()) {
+        if (!sqLiteAdapterTechnologies.hasRows()) {
             Log.wtf("MyActivity:populateSqlLiteAdapter()", "sqlLiteAdapter doesn't have rows. Filling.");
             String[] technologiesArray = getResources().getStringArray(R.array.things);
 
             for (String word : technologiesArray) {
-                sqLiteAdapter.create(word);
+                sqLiteAdapterTechnologies.create(word);
             }
         }
-        sqLiteAdapter.close();
+        sqLiteAdapterTechnologies.close();
     }
 
     public void readAllFromDatabase() {
-        sqLiteAdapter.open();
-        Cursor cursor = sqLiteAdapter.readAll();
+        sqLiteAdapterTechnologies.open();
+        Cursor cursor = sqLiteAdapterTechnologies.readAll();
 
         while (cursor.moveToNext()) {
             String word = cursor.getString(cursor.getColumnIndex(getString(R.string.word)));
             myDbArrayList.add(word);
         }
-        sqLiteAdapter.close();
+        sqLiteAdapterTechnologies.close();
     }
 
     public ArrayList<String> getRandomCollection(int limit) {

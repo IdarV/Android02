@@ -12,18 +12,18 @@ import android.util.Log;
  * User: tmg
  * Happy coding!
  */
-public class SQLiteAdapter {
+public class SQLiteAdapterTechnologies {
 
     public static final String DATABASE_NAME = "TechNames";
     public static final int DATABASE_VERSION = 1;
-    public static final String TABLE_NAME="Technologies";
+    public static final String TABLE_NAME_TECHNOLOGIES="Technologies";
 
     public static final String WORD_ID = "_id";
     public static final String WORD = "word";
 
     public static final String PREFERENCES_DB = "PreferencesDb";
 
-    private SQLiteHelper sqLiteHelper;
+    private SQLiteHelperTechnologies sqLiteHelperTechnologies;
     private SQLiteDatabase sqLiteDatabase;
     private Context context;
 
@@ -31,7 +31,7 @@ public class SQLiteAdapter {
 
     private long id = 1;
 
-    public SQLiteAdapter (Context context) {
+    public SQLiteAdapterTechnologies(Context context) {
         this.context = context;
 
         preferences = context.getSharedPreferences(PREFERENCES_DB, Activity.MODE_APPEND);
@@ -41,9 +41,9 @@ public class SQLiteAdapter {
 
     }
 
-    public SQLiteAdapter open () {
-        sqLiteHelper = new SQLiteHelper(context,DATABASE_NAME,null,DATABASE_VERSION);
-        sqLiteDatabase = sqLiteHelper.getWritableDatabase(); //Should be in a background thread, i.e. Async
+    public SQLiteAdapterTechnologies open () {
+        sqLiteHelperTechnologies = new SQLiteHelperTechnologies(context,DATABASE_NAME,null,DATABASE_VERSION);
+        sqLiteDatabase = sqLiteHelperTechnologies.getWritableDatabase(); //Should be in a background thread, i.e. Async
         return this;
     }
 
@@ -52,7 +52,7 @@ public class SQLiteAdapter {
         values.put(WORD_ID, id);
         values.put(WORD, word);
 
-        sqLiteDatabase.insert(TABLE_NAME,null,values);
+        sqLiteDatabase.insert(TABLE_NAME_TECHNOLOGIES,null,values);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putLong("nextId",id+1);
         editor.commit();
@@ -61,14 +61,13 @@ public class SQLiteAdapter {
     }
 
     public boolean hasRows(){
-        int rowcount = sqLiteDatabase.rawQuery("SELECT word FROM " + TABLE_NAME, null).getCount();
+        int rowcount = sqLiteDatabase.rawQuery("SELECT word FROM " + TABLE_NAME_TECHNOLOGIES, null).getCount();
         return  rowcount > 1;
     }
 
     public Cursor readAll() {
         //String[] columns = new String[]{WORD_ID, WORD};
-        // TODO; SELECT word (?)
-        return sqLiteDatabase.rawQuery("SELECT " + WORD + " FROM " + TABLE_NAME, null);
+        return sqLiteDatabase.rawQuery("SELECT " + WORD + " FROM " + TABLE_NAME_TECHNOLOGIES, null);
         //return sqLiteDatabase.query(TABLE_NAME, columns, null, null, null, null, null);
         //(Table_name, columns, where, where args, group by, order by, having)
     }
@@ -95,8 +94,8 @@ public class SQLiteAdapter {
     }*/
 
     public void deleteAll(){
-       sqLiteDatabase.delete(TABLE_NAME, null, null);
-        Log.wtf("SQLiteAdapter", "ZOMFG DELETED ALL");
+       sqLiteDatabase.delete(TABLE_NAME_TECHNOLOGIES, null, null);
+        Log.wtf("SQLiteAdapterTechnologies", "ZOMFG DELETED ALL");
 
     }
 
