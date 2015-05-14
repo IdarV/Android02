@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore;
 import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterTechnologies;
-import no.student.westerdals.tjoida13.Android02.db.SQLiteHelperHighscore;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,18 +66,18 @@ public class MyActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                populateSqlLiteAdapter();
+                populateTechnologies();
                 readAllFromDatabase();
                 setAndUpdateRandomStrings();
             }
         }).run();
     }
 
-    public void populateSqlLiteAdapter() {
+    public void populateTechnologies() {
         sqLiteAdapterTechnologies.open();
 
         if (!sqLiteAdapterTechnologies.hasRows()) {
-            Log.wtf("MyActivity:populateSqlLiteAdapter()", "sqlLiteAdapter doesn't have rows. Filling.");
+            Log.wtf("MyActivity:populateTechnologies()", "sqlLiteAdapter doesn't have rows. Filling.");
             String[] technologiesArray = getResources().getStringArray(R.array.things);
 
             for (String word : technologiesArray) {
@@ -99,7 +98,7 @@ public class MyActivity extends Activity {
         sqLiteAdapterTechnologies.close();
     }
 
-    public ArrayList<String> getRandomCollection(int limit) {
+    public ArrayList<String> getRandomCollectionOfTechnologies(int limit) {
         ArrayList<String> randomCollection = new ArrayList<String>();
         Random random = new Random();
 
@@ -121,13 +120,13 @@ public class MyActivity extends Activity {
                 i++;
             }
         }
-        Log.wtf("MyActivity():getRandomCollection", "Wrong words are " + wrongWords[0] + " and " + wrongWords[1]);
+        Log.wtf("MyActivity():getRandomCollectionOfTechnologies", "Wrong words are " + wrongWords[0] + " and " + wrongWords[1]);
 
         return randomCollection;
     }
 
-    public void setNames() {
-        Log.v("MyActivity:setNames()", "Updating textView names");
+    public void setTechnologiesToTextViews() {
+        Log.v("MyActivity", "Updating textView technologies");
         ArrayList<TextView> textViews = new ArrayList<TextView>();
         // TODO: Fix loop
         textViews.add((TextView) findViewById(R.id.textView2));
@@ -165,9 +164,8 @@ public class MyActivity extends Activity {
     }
 
     public void setAndUpdateRandomStrings() {
-        randomArray = getRandomCollection(8);
-        setNames();
-
+        randomArray = getRandomCollectionOfTechnologies(8);
+        setTechnologiesToTextViews();
     }
 
     public String pullCorrectWordFromList() {

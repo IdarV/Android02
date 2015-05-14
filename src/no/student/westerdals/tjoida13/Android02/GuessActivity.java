@@ -51,7 +51,7 @@ public class GuessActivity extends Activity{
     }
 
     public void initTextViews(){
-        Log.v("MyActivity:setNames()", "Updating textView names");
+        Log.v("MyActivity:setTechnologiesToTextViews()", "Updating textView names");
         ArrayList<TextView> textViews = new ArrayList<TextView>();
         // TODO: Fix loop
         textViews.add((TextView) findViewById(R.id.textView2));

@@ -62,6 +62,10 @@ public class SQLiteAdapterHighscore {
         //(Table_name, columns, where, where args, group by, order by, having)
     }
 
+    public Cursor readAllSortedDesc(){
+        return sqLiteDatabase.rawQuery("SELECT " + SCORE + ", " + USER + " FROM " + TABLE_NAME_HIGHSCORE + " ORDER BY " + SCORE + " DESC", null);
+    }
+
     /*public boolean update(Long personId, Person person) {
         ContentValues values = new ContentValues();
         values.put(PERSON_NAME, person.getName());
