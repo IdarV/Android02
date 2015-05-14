@@ -50,6 +50,18 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/default_text"
             android:id="@+id/textView8"/>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:layout_gravity="center_horizontal"/>
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_gravity="center_horizontal"/>
     <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

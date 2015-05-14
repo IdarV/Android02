@@ -145,8 +145,19 @@ public class MyActivity extends Activity {
         textViews.add((TextView) findViewById(R.id.textView9));
 
         for (int i = 0; i <= textViews.size() - 1; i++) {
-            textViews.get(i).setText(randomArray.get(i));
+            textViews.get(i).setText(addRandomSpacesToString(randomArray.get(i)));
         }
+    }
+
+    public String addRandomSpacesToString(String word){
+        Random random = new Random();
+        int spaces = random.nextInt(40);
+        String returnString = "";
+        for(int i = 0; i < spaces; i++){
+            returnString += " ";
+        }
+        return returnString += word;
+
     }
 
     public void setOkButtonOnClick() {
