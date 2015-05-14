@@ -139,7 +139,7 @@ public class GuessActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent guessIntent = new Intent(context, MyActivity.class);
-                guessIntent.putExtra("score", score);
+                guessIntent.putExtra("score", score+1);
                 startActivity(guessIntent);
             }
         });
