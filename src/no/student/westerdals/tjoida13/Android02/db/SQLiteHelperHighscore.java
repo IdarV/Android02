@@ -29,8 +29,6 @@ public class SQLiteHelperHighscore extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SCRIPT_CREATE_DATABASE);
-        Log.wtf("SQLiteHelperTechnologies:OnCreate", "OnCreate()");
-
     }
 
     @Override
