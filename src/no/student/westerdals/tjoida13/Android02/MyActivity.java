@@ -43,6 +43,7 @@ public class MyActivity extends Activity {
         setOkButtonOnClick();
         TextView header = (TextView) findViewById(R.id.textViewHeader);
         header.setText(String.valueOf(Score));
+        initHighScoreButton();
     }
 
     public void initSqlLiteAdapter() {
@@ -161,7 +162,7 @@ public class MyActivity extends Activity {
                         Collections.shuffle(randomArray);
                         guessIntent.putExtra("RemainingWords", randomArray);
                         guessIntent.putExtra("WrongWords", wrongWords);
-                        guessIntent.putExtra("Score", (Score+1));
+                        guessIntent.putExtra("Score", (Score + 1));
                         startActivity(guessIntent);
                     }
                 }).run();
@@ -185,6 +186,16 @@ public class MyActivity extends Activity {
     public void initScore(){
         Score = getIntent().getIntExtra("Score", 0);
         Log.wtf("initScore", "Score is " + Score);
+    }
+
+    public void initHighScoreButton(){
+        Button highscoreButton = (Button) findViewById(R.id.highscoreButton);
+        highscoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, HighscoreActivity.class));
+            }
+        });
     }
 
 }
