@@ -23,6 +23,7 @@ public class GuessActivity extends Activity{
     private String correctWord;
     private Context context;
     private ArrayList<String> wrongWords;
+    private int score;
 
     /**
      * Called when the activity is first created.
@@ -43,6 +44,7 @@ public class GuessActivity extends Activity{
         Collections.shuffle(randomArray);
         correctWord = intent.getStringExtra("CorrectWord");
         wrongWords = new ArrayList<String>(Arrays.asList(intent.getStringArrayExtra("WrongWords")));
+        score =intent.getIntExtra("Score", 0);
     }
 
     public void setNames() {
@@ -69,7 +71,7 @@ public class GuessActivity extends Activity{
 
     public String addRandomSpacesToString(String word){
         Random random = new Random();
-        int spaces = random.nextInt(40);
+        int spaces = random.nextInt(45);
         String returnString = "";
         for(int i = 0; i < spaces; i++){
             returnString += " ";
@@ -97,21 +99,36 @@ public class GuessActivity extends Activity{
         for(String currentWord : allAnswers){
             if(currentWord.equals(correctWord)){
                 answerButtons[i].setText(allAnswers.get(i));
-                answerButtons[i].setOnClickListener(getToastOnClickListener("Correct"));
+                answerButtons[i].setOnClickListener(getSuccessClickListener());
             }
             else{
                 answerButtons[i].setText(currentWord);
-                answerButtons[i].setOnClickListener(getToastOnClickListener("Wrong"));
+                answerButtons[i].setOnClickListener(getFailClickListener());
             }
             i++;
         }
     }
 
-    public View.OnClickListener getToastOnClickListener(final String toastText){
+    public View.OnClickListener getSuccessClickListener(){
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, MyActivity.class);
+                intent.putExtra("Score", score);
+                startActivity(intent);
+            }
+        };
+    }
+
+    public View.OnClickListener getFailClickListener(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, HighscoreActivity.class);
+                intent.putExtra("Score", score);
+                startActivity(intent);
             }
         };
     }
@@ -122,7 +139,7 @@ public class GuessActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent guessIntent = new Intent(context, MyActivity.class);
-                guessIntent.putExtra("Score", getIntent().getIntExtra("Score", 0));
+                guessIntent.putExtra("score", score);
                 startActivity(guessIntent);
             }
         });

@@ -69,6 +69,7 @@ public class SQLiteAdapterTechnologies {
         //(Table_name, columns, where, where args, group by, order by, having)
     }
 
+
     /*public boolean update(Long personId, Person person) {
         ContentValues values = new ContentValues();
         values.put(PERSON_NAME, person.getName());

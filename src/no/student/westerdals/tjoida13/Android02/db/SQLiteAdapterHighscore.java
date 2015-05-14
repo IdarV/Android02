@@ -51,7 +51,7 @@ public class SQLiteAdapterHighscore {
     }
 
     public boolean hasRows(){
-        int rowcount = sqLiteDatabase.rawQuery("SELECT word FROM " + TABLE_NAME_HIGHSCORE, null).getCount();
+        int rowcount = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME_HIGHSCORE, null).getCount();
         return  rowcount > 1;
     }
 
@@ -63,7 +63,7 @@ public class SQLiteAdapterHighscore {
     }
 
     public Cursor readAllSortedDesc(){
-        return sqLiteDatabase.rawQuery("SELECT " + SCORE + ", " + USER + " FROM " + TABLE_NAME_HIGHSCORE + " ORDER BY " + SCORE + " DESC", null);
+        return sqLiteDatabase.rawQuery("SELECT " + SCORE + ", " + USER + " FROM " + TABLE_NAME_HIGHSCORE + " ORDER BY " + SCORE + " LIMIT 7", null);
     }
 
     /*public boolean update(Long personId, Person person) {
