@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ public class MyActivity extends Activity {
     private ArrayList<String> myDbArrayList;
     private ArrayList<String> randomArray;
     private String[] wrongWords;
-    private int Score;
+    private int score;
 
     /**
      * Called when the activity is first created.
@@ -42,28 +41,13 @@ public class MyActivity extends Activity {
         initDataAsync();
         setOkButtonOnClick();
         TextView header = (TextView) findViewById(R.id.textViewHeader);
-        header.setText(String.valueOf(Score));
+        header.setText(String.valueOf(score));
         initHighScoreButton();
     }
 
     public void initSqlLiteAdapter() {
-
         sqLiteAdapterTechnologies = new SQLiteAdapterTechnologies(context);
         sqLiteAdapterHighscore = new SQLiteAdapterHighscore(context);
-/*
-        //TODO: DELETE THIS DEMO
-        sqLiteAdapterHighscore.open();
-        sqLiteAdapterHighscore.create(12, "IDAR");
-
-        Cursor c = sqLiteAdapterHighscore.readAll();
-        String name, score;
-        while (c.moveToNext()){
-            name = c.getString(c.getColumnIndex("user"));
-            score = c.getString(c.getColumnIndex("score"));
-            TextView header = (TextView) findViewById(R.id.textViewHeader);
-            header.setText(name + ": " + score);
-        }
-        sqLiteAdapterHighscore.close();*/
 
     }
 
@@ -83,7 +67,6 @@ public class MyActivity extends Activity {
         sqLiteAdapterTechnologies.open();
 
         if (!sqLiteAdapterTechnologies.hasRows()) {
-            Log.wtf("MyActivity:populateTechnologies()", "sqlLiteAdapter doesn't have rows. Filling.");
             String[] technologiesArray = getResources().getStringArray(R.array.things);
 
             for (String word : technologiesArray) {
@@ -126,13 +109,10 @@ public class MyActivity extends Activity {
                 i++;
             }
         }
-        Log.wtf("MyActivity():getRandomCollectionOfTechnologies", "Wrong words are " + wrongWords[0] + " and " + wrongWords[1]);
-
         return randomCollection;
     }
 
     public void setTechnologiesToTextViews() {
-        Log.v("MyActivity", "Updating textView technologies");
         ArrayList<TextView> textViews = new ArrayList<TextView>();
         // TODO: Fix loop
         textViews.add((TextView) findViewById(R.id.textView2));
@@ -154,7 +134,7 @@ public class MyActivity extends Activity {
         int spaces = random.nextInt(40);
         String returnString = "";
         for(int i = 0; i < spaces; i++){
-            returnString += " ";
+            returnString += getString(R.string.space);
         }
         return returnString += word;
 
@@ -169,11 +149,11 @@ public class MyActivity extends Activity {
                     @Override
                     public void run() {
                         Intent guessIntent = new Intent(context, GuessActivity.class);
-                        guessIntent.putExtra("CorrectWord", pullCorrectWordFromList());
+                        guessIntent.putExtra(getString(R.string.CorrectWord), pullCorrectWordFromList());
                         Collections.shuffle(randomArray);
-                        guessIntent.putExtra("RemainingWords", randomArray);
-                        guessIntent.putExtra("WrongWords", wrongWords);
-                        guessIntent.putExtra("Score", (Score + 1));
+                        guessIntent.putExtra(getString(R.string.RemainingWords), randomArray);
+                        guessIntent.putExtra(getString(R.string.WrongWords), wrongWords);
+                        guessIntent.putExtra(getString(R.string.Score), (score));
                         startActivity(guessIntent);
                     }
                 }).run();
@@ -195,8 +175,7 @@ public class MyActivity extends Activity {
     }
 
     public void initScore(){
-        Score = getIntent().getIntExtra("Score", 0);
-        Log.wtf("initScore", "Score is " + Score);
+        score = getIntent().getIntExtra(getString(R.string.Score), 0);
     }
 
     public void initHighScoreButton(){

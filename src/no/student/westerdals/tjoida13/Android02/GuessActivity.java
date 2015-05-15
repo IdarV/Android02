@@ -34,17 +34,19 @@ public class GuessActivity extends Activity{
         setContentView(R.layout.guess);
         context = this;
         getExtras();
+        // DECOMMENT TO GET CORRECT WORD IN LOG
+        Log.wtf("GuessActivity", "Correct word is " + correctWord);
         setNames();
         initBackButton();
     }
 
     public void getExtras(){
         Intent intent = getIntent();
-        randomArray = intent.getStringArrayListExtra("RemainingWords");
+        randomArray = intent.getStringArrayListExtra(getString(R.string.RemainingWords));
         Collections.shuffle(randomArray);
-        correctWord = intent.getStringExtra("CorrectWord");
-        wrongWords = new ArrayList<String>(Arrays.asList(intent.getStringArrayExtra("WrongWords")));
-        score =intent.getIntExtra("Score", 0);
+        correctWord = intent.getStringExtra(getString(R.string.CorrectWord));
+        wrongWords = new ArrayList<String>(Arrays.asList(intent.getStringArrayExtra(getString(R.string.WrongWords))));
+        score = intent.getIntExtra(getString(R.string.Score), 0);
     }
 
     public void setNames() {
@@ -53,9 +55,8 @@ public class GuessActivity extends Activity{
     }
 
     public void initTextViews(){
-        Log.v("MyActivity", "Updating textView names");
         ArrayList<TextView> textViews = new ArrayList<TextView>();
-        // TODO: Fix loop
+        // TODO: Fix loop (?)
         textViews.add((TextView) findViewById(R.id.textView2));
         textViews.add((TextView) findViewById(R.id.textView3));
         textViews.add((TextView) findViewById(R.id.textView4));
@@ -76,7 +77,7 @@ public class GuessActivity extends Activity{
         for(int i = 0; i < spaces; i++){
             returnString += " ";
         }
-        return returnString += word;
+        return returnString + word;
 
     }
 
@@ -113,9 +114,9 @@ public class GuessActivity extends Activity{
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Correct", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.Correct), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, MyActivity.class);
-                intent.putExtra("Score", score);
+                intent.putExtra(getString(R.string.Score), score+1);
                 startActivity(intent);
             }
         };
@@ -125,9 +126,9 @@ public class GuessActivity extends Activity{
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getString(R.string.Fail), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, HighscoreActivity.class);
-                intent.putExtra("Score", score);
+                intent.putExtra(getString(R.string.Score), score);
                 startActivity(intent);
             }
         };
@@ -139,7 +140,7 @@ public class GuessActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent guessIntent = new Intent(context, MyActivity.class);
-                guessIntent.putExtra("score", score+1);
+                guessIntent.putExtra(getString(R.string.score), score);
                 startActivity(guessIntent);
             }
         });

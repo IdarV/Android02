@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Android02</string>
-    <string name="user"></string>
-    <string name="default_text">Default</string>
+    <string name="Default">Default</string>
     <string name="OK">OK</string>
     <string name="word">word</string>
     <string name="Back">Back</string>
     <string name="header_text">Header</string>
     <string name="readyButtonText">Ok, i am ready.</string>
+    <string name="Score">Score</string>
+    <string name="score">score</string>
+    <string name="User">User</string>
+    <string name="user">user</string>
+    <string name="defaultUserName">defaultUserName</string>
+    <string name="PleaseEnterAName">Please enter a name</string>
+    <string name="spaceColonSpace">" : "</string>
+    <string name="Correct">Correct</string>
+    <string name="Fail">Fail</string>
+    <string name="WrongWords">WrongWords</string>
+    <string name="CorrectWord">CorrectWord</string>
+    <string name="RemainingWords">RemainingWords</string>
+    <string name="space">" "</string>
+
+    <!-- String array of technologies used in application -->
     <string-array name="things">
         <!-- OS -->
         <item>Ubuntu</item>

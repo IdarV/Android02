@@ -43,12 +43,12 @@ public class EnterNameActivity extends Activity {
                     String name = nameInputField.getText().toString();
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                     SharedPreferences.Editor sharedPreferencesEditor = preferences.edit();
-                    sharedPreferencesEditor.putString("User", name);
+                    sharedPreferencesEditor.putString(getString(R.string.User), name);
                     sharedPreferencesEditor.apply();
 
                     startActivity(new Intent(context, MyActivity.class));
                 } else{
-                    Toast.makeText(context, "Please enter a name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, getString(R.string.PleaseEnterAName), Toast.LENGTH_SHORT).show();
                 }
             }
         });
