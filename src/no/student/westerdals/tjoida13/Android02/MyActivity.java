@@ -3,8 +3,10 @@ package no.student.westerdals.tjoida13.Android02;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +28,8 @@ public class MyActivity extends Activity {
     private ArrayList<String> randomArray;
     private String[] wrongWords;
     private int score;
+    private int totalRounds;
+    private int round;
 
     /**
      * Called when the activity is first created.
@@ -35,19 +39,44 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         context = this;
-
         initSqlLiteAdapter();
+        initRound();
         initScore();
         initDataAsync();
         setOkButtonOnClick();
-        TextView header = (TextView) findViewById(R.id.textViewHeader);
-        header.setText(String.valueOf(score));
+        initTextViews();
         initHighScoreButton();
     }
 
     public void initSqlLiteAdapter() {
         sqLiteAdapterTechnologies = new SQLiteAdapterTechnologies(context);
         sqLiteAdapterHighscore = new SQLiteAdapterHighscore(context);
+
+    }
+
+    public void initTextViews(){
+        TextView header = (TextView) findViewById(R.id.textViewHeader);
+        header.setText(getString(R.string.Round) + getString(R.string.space) + round + getString(R.string.spaceColonSpace) + totalRounds);
+
+        TextView textViewscore = (TextView) findViewById(R.id.textViewScore);
+        textViewscore.setText(getString(R.string.Score) + getString(R.string.spaceColonSpace) + score);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String user = sharedPreferences.getString(getString(R.string.User), getString(R.string.defaultUserName));
+
+        TextView userHeader = (TextView) findViewById(R.id.textViewUser);
+        userHeader.setText(getString(R.string.User) + getString(R.string.spaceColonSpace) + user);
+    }
+
+    public void initRound(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        round = sharedPreferences.getInt(getString(R.string.Round), 0);
+        round++;
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putInt(getString(R.string.Round), round);
+        sharedPreferencesEditor.apply();
+        totalRounds = sharedPreferences.getInt(getString(R.string.TotalRounds), 8);
+
 
     }
 

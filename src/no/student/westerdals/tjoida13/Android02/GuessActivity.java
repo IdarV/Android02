@@ -3,9 +3,12 @@ package no.student.westerdals.tjoida13.Android02;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,12 +21,14 @@ import java.util.Random;
 /**
  * Created by Idar Vassdal on 13.05.2015.
  */
-public class GuessActivity extends Activity{
+public class GuessActivity extends Activity {
     private ArrayList<String> randomArray;
     private String correctWord;
     private Context context;
     private ArrayList<String> wrongWords;
     private int score;
+    private int round;
+    private int totalRounds;
 
     /**
      * Called when the activity is first created.
@@ -33,6 +38,7 @@ public class GuessActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.guess);
         context = this;
+        initRound();
         getExtras();
         // DECOMMENT TO GET CORRECT WORD IN LOG
         Log.wtf("GuessActivity", "Correct word is " + correctWord);
@@ -40,7 +46,7 @@ public class GuessActivity extends Activity{
         initBackButton();
     }
 
-    public void getExtras(){
+    public void getExtras() {
         Intent intent = getIntent();
         randomArray = intent.getStringArrayListExtra(getString(R.string.RemainingWords));
         Collections.shuffle(randomArray);
@@ -54,7 +60,13 @@ public class GuessActivity extends Activity{
         initTextViews();
     }
 
-    public void initTextViews(){
+    public void initRound() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        round = sharedPreferences.getInt(getString(R.string.Round), 1);
+        totalRounds = sharedPreferences.getInt(getString(R.string.TotalRounds), 8);
+    }
+
+    public void initTextViews() {
         ArrayList<TextView> textViews = new ArrayList<TextView>();
         // TODO: Fix loop (?)
         textViews.add((TextView) findViewById(R.id.textView2));
@@ -70,18 +82,18 @@ public class GuessActivity extends Activity{
         }
     }
 
-    public String addRandomSpacesToString(String word){
+    public String addRandomSpacesToString(String word) {
         Random random = new Random();
         int spaces = random.nextInt(45);
         String returnString = "";
-        for(int i = 0; i < spaces; i++){
+        for (int i = 0; i < spaces; i++) {
             returnString += " ";
         }
         return returnString + word;
 
     }
 
-    public void initAnswerButtons(){
+    public void initAnswerButtons() {
         Button[] answerButtons = new Button[3];
         Button guessOne = (Button) findViewById(R.id.guessOne);
         Button guessTwo = (Button) findViewById(R.id.guessTwo);
@@ -97,12 +109,11 @@ public class GuessActivity extends Activity{
         Collections.shuffle(allAnswers);
 
         int i = 0;
-        for(String currentWord : allAnswers){
-            if(currentWord.equals(correctWord)){
+        for (String currentWord : allAnswers) {
+            if (currentWord.equals(correctWord)) {
                 answerButtons[i].setText(allAnswers.get(i));
                 answerButtons[i].setOnClickListener(getSuccessClickListener());
-            }
-            else{
+            } else {
                 answerButtons[i].setText(currentWord);
                 answerButtons[i].setOnClickListener(getFailClickListener());
             }
@@ -110,31 +121,53 @@ public class GuessActivity extends Activity{
         }
     }
 
-    public View.OnClickListener getSuccessClickListener(){
+    public View.OnClickListener getSuccessClickListener() {
+        if(round == totalRounds){
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, getString(R.string.Correct), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, HighscoreActivity.class);
+                    intent.putExtra(getString(R.string.Score), score + 1);
+                    startActivity(intent);
+                }
+            };
+        }
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, getString(R.string.Correct), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, MyActivity.class);
-                intent.putExtra(getString(R.string.Score), score+1);
+                intent.putExtra(getString(R.string.Score), score + 1);
                 startActivity(intent);
             }
         };
     }
 
-    public View.OnClickListener getFailClickListener(){
+    public View.OnClickListener getFailClickListener() {
+        if(round == totalRounds) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, getString(R.string.Fail), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, HighscoreActivity.class);
+                    intent.putExtra(getString(R.string.Score), score);
+                    startActivity(intent);
+                }
+            };
+        }
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, getString(R.string.Fail), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, HighscoreActivity.class);
+                Intent intent = new Intent(context, MyActivity.class);
                 intent.putExtra(getString(R.string.Score), score);
                 startActivity(intent);
             }
         };
     }
 
-    public void initBackButton(){
+    public void initBackButton() {
         Button backButton = (Button) findViewById(R.id.BackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

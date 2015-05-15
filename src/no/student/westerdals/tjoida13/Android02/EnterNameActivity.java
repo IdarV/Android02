@@ -44,6 +44,8 @@ public class EnterNameActivity extends Activity {
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
                     SharedPreferences.Editor sharedPreferencesEditor = preferences.edit();
                     sharedPreferencesEditor.putString(getString(R.string.User), name);
+                    sharedPreferencesEditor.putInt(getString(R.string.Round), 0);
+
                     sharedPreferencesEditor.apply();
 
                     startActivity(new Intent(context, MyActivity.class));

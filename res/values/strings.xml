@@ -20,6 +20,8 @@
     <string name="CorrectWord">CorrectWord</string>
     <string name="RemainingWords">RemainingWords</string>
     <string name="space">" "</string>
+    <string name="Round">Round</string>
+    <string name="TotalRounds">TotalRounds</string>
 
     <!-- String array of technologies used in application -->
     <string-array name="things">
