@@ -43,7 +43,7 @@ public class GuessActivity extends Activity {
         // DECOMMENT TO GET CORRECT WORD IN LOG
         Log.wtf("GuessActivity", "Correct word is " + correctWord);
         setNames();
-        initBackButton();
+        //initBackButton();
     }
 
     public void getExtras() {
@@ -182,7 +182,7 @@ public class GuessActivity extends Activity {
         };
     }
 
-    public void initBackButton() {
+    /*public void initBackButton() {
         Button backButton = (Button) findViewById(R.id.BackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,5 +192,5 @@ public class GuessActivity extends Activity {
                 startActivity(guessIntent);
             }
         });
-    }
+    }*/
 }
