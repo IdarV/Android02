@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,7 +33,8 @@ public class HighscoreActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.highscore);
         context = this;
-        initialize();
+        initLists();
+        initRoundReset();
         getExtras();
         readFromDatabase();
         updateHighScoreIfNew();
@@ -44,7 +44,14 @@ public class HighscoreActivity extends Activity {
 
     }
 
-    public void initialize() {
+    public void initRoundReset(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putInt(getString(R.string.Round), 0);
+        sharedPreferencesEditor.apply();
+    }
+
+    public void initLists() {
         nameList = new ArrayList<String>();
         scoreList = new ArrayList<Integer>();
         highscoreList = (ListView) findViewById(R.id.highscoreListView);

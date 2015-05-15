@@ -63,7 +63,7 @@ public class SQLiteAdapterHighscore {
     }
 
     public Cursor readAllSortedDesc(){
-        return sqLiteDatabase.rawQuery("SELECT " + SCORE + ", " + USER + " FROM " + TABLE_NAME_HIGHSCORE + " ORDER BY " + SCORE + " LIMIT 7", null);
+        return sqLiteDatabase.rawQuery("SELECT " + SCORE + ", " + USER + " FROM " + TABLE_NAME_HIGHSCORE + " ORDER BY " + USER + " DESC LIMIT 7", null);
     }
 
     /*public boolean update(Long personId, Person person) {

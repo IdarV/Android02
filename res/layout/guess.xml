@@ -8,7 +8,30 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/header_text"
-            android:id="@+id/textViewHeader"
+            android:id="@+id/textViewHeader" android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/header_text"
+            android:id="@+id/textViewScore" android:layout_gravity="center_horizontal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/header_text"
+            android:id="@+id/textViewUser" android:layout_gravity="center_horizontal"/>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_gravity="center_horizontal"/>
+    <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
             android:layout_gravity="center_horizontal"/>
     <TextView
             android:layout_width="wrap_content"

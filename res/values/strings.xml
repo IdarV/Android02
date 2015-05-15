@@ -22,6 +22,7 @@
     <string name="space">" "</string>
     <string name="Round">Round</string>
     <string name="TotalRounds">TotalRounds</string>
+    <string name="spaceSlashSpace">" / "</string>
 
     <!-- String array of technologies used in application -->
     <string-array name="things">

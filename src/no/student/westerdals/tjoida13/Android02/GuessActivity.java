@@ -58,6 +58,7 @@ public class GuessActivity extends Activity {
     public void setNames() {
         initAnswerButtons();
         initTextViews();
+        initPlayerInfo();
     }
 
     public void initRound() {
@@ -80,6 +81,20 @@ public class GuessActivity extends Activity {
         for (int i = 0; i <= textViews.size() - 1; i++) {
             textViews.get(i).setText(addRandomSpacesToString(randomArray.get(i)));
         }
+    }
+
+    public void initPlayerInfo(){
+        TextView header = (TextView) findViewById(R.id.textViewHeader);
+        header.setText(getString(R.string.Round) + getString(R.string.space) + round + getString(R.string.spaceSlashSpace) + totalRounds);
+
+        TextView textViewscore = (TextView) findViewById(R.id.textViewScore);
+        textViewscore.setText(getString(R.string.Score) + getString(R.string.spaceColonSpace) + score + getString(R.string.spaceSlashSpace) + (round - 1));
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String user = sharedPreferences.getString(getString(R.string.User), getString(R.string.defaultUserName));
+
+        TextView userHeader = (TextView) findViewById(R.id.textViewUser);
+        userHeader.setText(getString(R.string.User) + getString(R.string.spaceColonSpace) + user);
     }
 
     public String addRandomSpacesToString(String word) {
