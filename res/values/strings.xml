@@ -12,7 +12,7 @@
     <string name="User">User</string>
     <string name="user">user</string>
     <string name="defaultUserName">defaultUserName</string>
-    <string name="PleaseEnterAName">Please enter aa name</string>
+    <string name="PleaseEnterAName">Please enter a name</string>
     <string name="spaceColonSpace">" : "</string>
     <string name="Correct">Correct</string>
     <string name="Fail">Fail</string>
