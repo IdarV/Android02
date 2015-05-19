@@ -9,9 +9,6 @@ import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore
 import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore.SCORE;
 import static no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore.USER;
 
-/**
- * Created by Cyzla on 14.05.2015.
- */
 public class SQLiteHelperHighscore extends SQLiteOpenHelper {
     private static final String SCRIPT_CREATE_DATABASE = /*"CREATE TABLE "
             + TABLE_NAME_TECHNOLOGIES + " (" + WORD_ID + " NUMBER PRIMARY KEY,"

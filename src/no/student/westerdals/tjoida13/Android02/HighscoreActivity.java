@@ -15,9 +15,6 @@ import no.student.westerdals.tjoida13.Android02.db.SQLiteAdapterHighscore;
 
 import java.util.ArrayList;
 
-/**
- * Created by Cyzla on 14.05.2015.
- */
 public class HighscoreActivity extends Activity {
     private Context context;
     private ListView highscoreList;
@@ -41,7 +38,6 @@ public class HighscoreActivity extends Activity {
         addDataToListView();
         updateDatabase();
         setBackButtonAction();
-
     }
 
     public void initRoundReset(){
@@ -113,15 +109,16 @@ public class HighscoreActivity extends Activity {
     public void updateHighScoreIfNew() {
         int tempscore;
         String tempName;
-        boolean newNameRegistred = false;
+        boolean newNameRegistered = false;
 
         for (int i = 0; i < scoreList.size() - 1; i++) {
             if (currentScore > scoreList.get(i)) {
-                if(!newNameRegistred){
+                if(!newNameRegistered){
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                     currentUser = sharedPreferences.getString(getString(R.string.User), getString(R.string.defaultUserName));
-                    newNameRegistred = true;
+                    newNameRegistered = true;
                 }
+
                 tempscore = scoreList.get(i);
                 tempName = nameList.get(i);
 
@@ -133,7 +130,6 @@ public class HighscoreActivity extends Activity {
             }
         }
     }
-
 
     public void updateDatabase() {
         sqLiteAdapterHighscore.open();

@@ -17,9 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-/**
- * Created by Idar Vassdal on 12.05.2015.
- */
+
 public class MyActivity extends Activity {
     private Context context;
     public static SQLiteAdapterTechnologies sqLiteAdapterTechnologies;
@@ -31,9 +29,6 @@ public class MyActivity extends Activity {
     private int totalRounds;
     private int round;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +71,6 @@ public class MyActivity extends Activity {
         sharedPreferencesEditor.putInt(getString(R.string.Round), round);
         sharedPreferencesEditor.apply();
         totalRounds = sharedPreferences.getInt(getString(R.string.TotalRounds), 8);
-
-
     }
 
     public void initDataAsync() {
@@ -130,20 +123,23 @@ public class MyActivity extends Activity {
                 randomCollection.add(word);
             }
         }
+        setWrongWords(randomCollection, random.nextInt(myDbArrayList.size() - 1));
+        return randomCollection;
+    }
+
+    private void setWrongWords(ArrayList<String> randomCollection, int randomint){
         wrongWords = new String[2];
         for(int i = 0; i < 2; ){
-            String word = myDbArrayList.get(random.nextInt(myDbArrayList.size() - 1));
+            String word = myDbArrayList.get(randomint);
             if (!randomCollection.contains(word)) {
                 wrongWords[i] = word;
                 i++;
             }
         }
-        return randomCollection;
     }
 
     public void setTechnologiesToTextViews() {
         ArrayList<TextView> textViews = new ArrayList<TextView>();
-        // TODO: Fix loop
         textViews.add((TextView) findViewById(R.id.textView2));
         textViews.add((TextView) findViewById(R.id.textView3));
         textViews.add((TextView) findViewById(R.id.textView4));
@@ -191,7 +187,8 @@ public class MyActivity extends Activity {
     }
 
     public void setAndUpdateRandomStrings() {
-        randomArray = getRandomCollectionOfTechnologies(8);
+
+        randomArray = getRandomCollectionOfTechnologies(getResources().getInteger(R.integer.eight));
         setTechnologiesToTextViews();
     }
 
@@ -204,7 +201,7 @@ public class MyActivity extends Activity {
     }
 
     public void initScore(){
-        score = getIntent().getIntExtra(getString(R.string.Score), 0);
+        score = getIntent().getIntExtra(getString(R.string.Score), getResources().getInteger(R.integer.zero));
     }
 
     public void initHighScoreButton(){

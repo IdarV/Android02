@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Android02</string>
+    <string name="app_name">Sam\'s Game</string>
     <string name="Default">Default</string>
     <string name="OK">OK</string>
     <string name="word">word</string>
@@ -12,7 +12,7 @@
     <string name="User">User</string>
     <string name="user">user</string>
     <string name="defaultUserName">defaultUserName</string>
-    <string name="PleaseEnterAName">Please enter a name</string>
+    <string name="PleaseEnterAName">Please enter aa name</string>
     <string name="spaceColonSpace">" : "</string>
     <string name="Correct">Correct</string>
     <string name="Fail">Fail</string>
@@ -23,6 +23,8 @@
     <string name="Round">Round</string>
     <string name="TotalRounds">TotalRounds</string>
     <string name="spaceSlashSpace">" / "</string>
+    <string name="highscore">Highscore</string>
+    <string name="whatwordismissing">What word is missing?</string>
 
     <!-- String array of technologies used in application -->
     <string-array name="things">
