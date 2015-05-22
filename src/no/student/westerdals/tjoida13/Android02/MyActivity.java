@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -49,7 +50,7 @@ public class MyActivity extends Activity {
 
     }
 
-    public void initTextViews(){
+    public void initTextViews() {
         TextView header = (TextView) findViewById(R.id.textViewHeader);
         header.setText(getString(R.string.Round) + getString(R.string.space) + round + getString(R.string.spaceSlashSpace) + totalRounds);
 
@@ -63,7 +64,7 @@ public class MyActivity extends Activity {
         userHeader.setText(getString(R.string.User) + getString(R.string.spaceColonSpace) + user);
     }
 
-    public void initRound(){
+    public void initRound() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         round = sharedPreferences.getInt(getString(R.string.Round), 0);
         round++;
@@ -123,17 +124,28 @@ public class MyActivity extends Activity {
                 randomCollection.add(word);
             }
         }
-        setWrongWords(randomCollection, random.nextInt(myDbArrayList.size() - 1));
+        setWrongWords(randomCollection, random);
         return randomCollection;
     }
 
-    private void setWrongWords(ArrayList<String> randomCollection, int randomint){
+    private void setWrongWords(ArrayList<String> randomCollection, Random random) {
         wrongWords = new String[2];
-        for(int i = 0; i < 2; ){
+        for (int i = 0; i < 2; ) {
+            int randomint = random.nextInt(myDbArrayList.size() - 1);
             String word = myDbArrayList.get(randomint);
             if (!randomCollection.contains(word)) {
-                wrongWords[i] = word;
-                i++;
+                Log.i("WORD", word);
+                if (!(wrongWords[i] == null)) {
+                    if (!wrongWords[i].equalsIgnoreCase(word)) {
+                        wrongWords[i] = word;
+                        Log.i("MyActivity", "Added wrong word" + word);
+                        i++;
+                    }
+                }else {
+                    wrongWords[i] = word;
+                    Log.i("MyActivity", "Added wrong word" + word);
+                    i++;
+                }
             }
         }
     }
@@ -154,11 +166,11 @@ public class MyActivity extends Activity {
         }
     }
 
-    public String addRandomSpacesToString(String word){
+    public String addRandomSpacesToString(String word) {
         Random random = new Random();
         int spaces = random.nextInt(40);
         String returnString = "";
-        for(int i = 0; i < spaces; i++){
+        for (int i = 0; i < spaces; i++) {
             returnString += getString(R.string.space);
         }
         return returnString += word;
@@ -194,17 +206,17 @@ public class MyActivity extends Activity {
 
     public String pullCorrectWordFromList() {
         Random random = new Random();
-        int randomIndex = random.nextInt(randomArray.size()-1);
+        int randomIndex = random.nextInt(randomArray.size() - 1);
         String correctWord = randomArray.get(randomIndex);
         randomArray.remove(randomIndex);
         return correctWord;
     }
 
-    public void initScore(){
+    public void initScore() {
         score = getIntent().getIntExtra(getString(R.string.Score), getResources().getInteger(R.integer.zero));
     }
 
-    public void initHighScoreButton(){
+    public void initHighScoreButton() {
         Button highscoreButton = (Button) findViewById(R.id.highscoreButton);
         highscoreButton.setOnClickListener(new View.OnClickListener() {
             @Override

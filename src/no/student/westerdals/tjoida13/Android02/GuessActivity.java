@@ -52,6 +52,9 @@ public class GuessActivity extends Activity {
         Collections.shuffle(randomArray);
         correctWord = intent.getStringExtra(getString(R.string.CorrectWord));
         wrongWords = new ArrayList<String>(Arrays.asList(intent.getStringArrayExtra(getString(R.string.WrongWords))));
+        for(String w : wrongWords){
+            Log.i("Wrongwords", w);
+        }
         score = intent.getIntExtra(getString(R.string.Score), 0);
     }
 
@@ -69,7 +72,6 @@ public class GuessActivity extends Activity {
 
     public void initTextViews() {
         ArrayList<TextView> textViews = new ArrayList<TextView>();
-        // TODO: Fix loop (?)
         textViews.add((TextView) findViewById(R.id.textView2));
         textViews.add((TextView) findViewById(R.id.textView3));
         textViews.add((TextView) findViewById(R.id.textView4));
@@ -181,16 +183,4 @@ public class GuessActivity extends Activity {
             }
         };
     }
-
-    /*public void initBackButton() {
-        Button backButton = (Button) findViewById(R.id.BackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent guessIntent = new Intent(context, MyActivity.class);
-                guessIntent.putExtra(getString(R.string.score), score);
-                startActivity(guessIntent);
-            }
-        });
-    }*/
 }
